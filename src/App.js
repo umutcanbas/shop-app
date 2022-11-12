@@ -7,9 +7,11 @@ import alertify from "alertifyjs";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./NotFound";
 import CartList from "./CartList";
+import FormDemo1 from "./FormDemo1";
+import FormDemo2 from "./FormDemo2";
 
 export default class App extends Component {
-  state = { currentCategory: "", products: [], cart: [] };
+  state = { currentCategory: "", products: [], cart: [], name: "Mahmıt" };
 
   componentDidMount() {
     this.getProducts();
@@ -41,13 +43,13 @@ export default class App extends Component {
     }
 
     this.setState({ cart: newCart });
-    alertify.success(product.productName + " added to cart!", 1);
+    alertify.success(product.productName + " added to cart!");
   };
 
   removeFromCart = (product) => {
     let newCart = this.state.cart.filter((c) => c.product.id !== product.id);
     this.setState({ cart: newCart });
-    alertify.error(product.productName + " removed from cart!", 1)
+    alertify.error(product.productName + " removed from cart!", 1);
   };
 
   render() {
@@ -57,7 +59,11 @@ export default class App extends Component {
     return (
       <div>
         <Container>
-          <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
+          <Navi
+            removeFromCart={this.removeFromCart}
+            cart={this.state.cart}
+            guessName={this.state.name}
+          />
           <Row>
             <Col xs="3">
               <CategoryList
@@ -89,6 +95,9 @@ export default class App extends Component {
                     />
                   }
                 />
+
+                <Route path="/form1" element={<FormDemo1 />} />
+                <Route path="/form2" element={<FormDemo2 />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Col>
